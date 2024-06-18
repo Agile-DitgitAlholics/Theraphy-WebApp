@@ -10,7 +10,7 @@ import {CreateMedicalHistory} from "../model/medical-history/CreateMedicalHistor
 })
 export class MedicalHistoryService extends BaseService<MedicalHistory> {
 
-  endPoint = '/medical-histories';
+  endPoint = '/health-expertise/medical-histories';
 
   constructor(http: HttpClient) {
     super(http);

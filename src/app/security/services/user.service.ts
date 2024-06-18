@@ -8,7 +8,7 @@ import {BaseService} from "../../shared/services/base.service";
   providedIn: 'root'
 })
 export class UserService extends BaseService<User>{
-  endPoint = '/auth';
+  endPoint = '/security/auth';
 
   constructor(http: HttpClient) {
     super(http);
@@ -17,6 +17,7 @@ export class UserService extends BaseService<User>{
 
   login(username: string, password: string): Observable<any>{
     const credentials = {username, password};
+    console.log(credentials);
     return this.http.post(`${this.basePath}/authentication`, credentials).pipe(
       tap((response: any) => {
         console.log('Response from server:', response); // Verifica la estructura de la respuesta
@@ -24,6 +25,18 @@ export class UserService extends BaseService<User>{
           localStorage.setItem('jwtToken', response.access_Token); // Almacena access_Token en localStorage
         }
       }),
+      catchError((error: any) => {
+        console.error('Error from server:', error);
+        return throwError(error);
+      })
+    );
+  }
+  getUserDetails(): Observable<any> {
+    const token = localStorage.getItem('jwtToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(`${this.basePath}/get-user`, { headers }).pipe(
       catchError((error: any) => {
         console.error('Error from server:', error);
         return throwError(error);

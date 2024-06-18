@@ -6,13 +6,14 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {CreatePatient} from "../model/CreateUsers/createPatient";
 import {Observable} from "rxjs";
 import {Physiotherapist} from "../model/physiotherapist";
+import {Page} from "../model/Page";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PhysiotherapistService extends BaseService<Physiotherapist>{
 
-  endPoint = '/physiotherapists';
+  endPoint = '/profile/physiotherapists';
 
   constructor(http: HttpClient) {
     super(http);
@@ -30,5 +31,17 @@ export class PhysiotherapistService extends BaseService<Physiotherapist>{
       'Authorization': `Bearer ${jwtToken}`
     });
     return this.http.post<CreatePhysiotherapist>(createPhysiotherapistUrl, physiotherapist, { headers });
+  }
+
+  getAllPhysiotherapists(): Observable<Page<Physiotherapist>> {
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (!jwtToken) {
+      throw new Error('Token JWT no encontrado en el localStorage.');
+    }
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${jwtToken}`
+    });
+    return this.http.get<Page<Physiotherapist>>(this.basePath, { headers });
   }
 }

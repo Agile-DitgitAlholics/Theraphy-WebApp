@@ -11,7 +11,7 @@ import {Therapy} from "../model/therapy";
 })
 export class TreatmentService extends BaseService<Treatment> {
 
-  endPoint = '/treatments';
+  endPoint = '/therapy/treatments';
 
   constructor(http: HttpClient) {
     super(http);

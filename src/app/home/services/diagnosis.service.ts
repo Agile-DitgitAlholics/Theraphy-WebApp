@@ -9,7 +9,7 @@ import {Consultation} from "../../consultations/model/Consultation";
   providedIn: 'root'
 })
 export class DiagnosisService extends BaseService<Diagnosis>{
-  endPoint = '/diagnoses';
+  endPoint = '/health-expertise/diagnoses';
   constructor(http: HttpClient) {
     super(http);
     this.basePath += this.endPoint;

@@ -12,11 +12,11 @@ import {Patient} from "../../model/patient";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
-  physiotherapists: Physiotherapist[]=[];
-  patients: Patient[]=[]
+  physiotherapists: Physiotherapist[] = [];
+  patients: Patient[] = []
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,27 +28,33 @@ export class LoginComponent implements OnInit{
 
   ngOnInit() {
 
-    this.patientService.getAll().subscribe((response: any) =>{
+    this.patientService.getAll().subscribe((response: any) => {
       this.patients = response.content;
     })
   }
 
-  login(){
-    this.userService.login(this.username, this.password).subscribe(
-      ()=>{
-        const patient = this.patients.find(patient => patient.user.username === this.username);
-
-        if (patient) {
-          this.router.navigate((['/home-patient']));
-        } else {
-          this.router.navigate((['/home-doctor']));
-        }
+  login() {
+    this.userService.login(this.username, this.password).subscribe({
+      next: () => {
+        this.userService.getUserDetails().subscribe({
+          next: (user) => {
+            if (user.role === 'PATIENT') {
+              this.router.navigate(['/home-patient']);
+            } else {
+              this.router.navigate(['/home-doctor']);
+            }
+          },
+          error: (error) => {
+            console.error('Error al obtener detalles del usuario:', error);
+          }
+        });
       },
-      (error) => {
-        console.error('Error de inicio de sesion:', error);
+      error: (error) => {
+        console.error('Error de inicio de sesión:', error);
       }
-    );
+    });
   }
+
 
   loginForm: FormGroup = this.formBuilder.group({
     username: ['', { validators: [Validators.required], updateOn: 'change'}],

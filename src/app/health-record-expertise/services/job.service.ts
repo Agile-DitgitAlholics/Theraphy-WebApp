@@ -10,7 +10,7 @@ import {catchError, Observable, retry} from "rxjs";
 })
 export class JobService extends BaseService<Job>{
 
-  endPoint = '/jobs';
+  endPoint = '/health-expertise/jobs';
 
   constructor(http: HttpClient) {
     super(http);
