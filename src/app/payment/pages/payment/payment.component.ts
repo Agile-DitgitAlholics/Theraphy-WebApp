@@ -76,7 +76,14 @@ export class PaymentComponent implements OnInit {
   createToken(): void {
     const name = this.stripeForm.get('name')!.value;
     console.log("name" + name);
-    this.stripeService
+    this.createConsultation();
+    this._snackBar.open('Payment successfully', '',{
+      duration:6000,
+      horizontalPosition:'center',
+      verticalPosition:'bottom',
+    })
+    this.router.navigate(['/my-consultations-list']);
+   /* this.stripeService
       .createToken(this.card.element, {name})
       .subscribe((result) => {
         if (result.token) {
@@ -99,7 +106,7 @@ export class PaymentComponent implements OnInit {
         } else if (result.error) {
           this.error = result.error.message;
         }
-      });
+      });*/
   }
   createConsultation(){
     this.consultationService.createConsultation(this.consultation).subscribe((response:any) => {

@@ -9,6 +9,6 @@ export interface Consultation {
   date:string;
   hour:string;
   place:string;
-  physiotherapist: Physiotherapist;
-  patient: Patient;
+  physiotherapistId: Physiotherapist;
+  patientId: Patient;
 }

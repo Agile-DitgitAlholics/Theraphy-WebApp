@@ -15,9 +15,9 @@
         <h3>Upcoming Consultation</h3>
         <div class="card-consultation" *ngIf="lastConsultation">
           <div class="profile-card">
-            <img src="{{lastConsultation!.physiotherapist.photoUrl}}" alt="Italian Trulli">
+            <img src="{{lastConsultation!.physiotherapistId.photoUrl}}" alt="Italian Trulli">
             <div class="description">
-              <h4>Dr. {{lastConsultation!.physiotherapist.user.firstname}} {{lastConsultation!.physiotherapist.user.lastname}}</h4>
+              <h4>Dr. {{lastConsultation!.physiotherapistId.user.firstname}} {{lastConsultation!.physiotherapistId.user.lastname}}</h4>
               <p>{{lastConsultation!.topic}}</p>
             </div>
           </div>

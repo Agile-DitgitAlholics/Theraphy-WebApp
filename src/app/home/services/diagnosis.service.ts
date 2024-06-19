@@ -26,7 +26,7 @@ export class DiagnosisService extends BaseService<Diagnosis>{
       'Authorization': `Bearer ${jwtToken}`
     });
 
-    return this.http.get<Consultation>(getLastDiagnosisByPatientIdUrl, { headers })
+    return this.http.get<Diagnosis>(getLastDiagnosisByPatientIdUrl, { headers })
       .pipe(
         retry(2),
         catchError(this.handleError));

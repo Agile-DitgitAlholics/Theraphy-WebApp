@@ -1,104 +1,106 @@
-import { Component } from '@angular/core';
-import {Physiotherapist} from "../../../security/model/physiotherapist";
-import {PhysiotherapistService} from "../../../security/services/physiotherapist.service";
-import {Router} from "@angular/router";
-import {Consultation} from "../../model/Consultation";
-import {ConsultationService} from "../../services/consultation.service";
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from "@angular/router";
+import { ConsultationService } from "../../services/consultation.service";
 import { MatDialog } from '@angular/material/dialog';
-import { MatDialogRef } from '@angular/material/dialog';
-import {DiagnosisDialogComponent} from "../../../shared/components/diagnosis-dialog/diagnosis-dialog.component";
-import {PatientService} from "../../../security/services/patient.service";
-
+import { filter } from 'rxjs/operators';
+import { PatientService } from "../../../security/services/patient.service";
+import { Consultation } from "../../model/Consultation";
+import { DiagnosisDialogComponent } from "../../../shared/components/diagnosis-dialog/diagnosis-dialog.component";
 
 @Component({
   selector: 'app-consultations-list',
   templateUrl: './consultations-list.component.html',
   styleUrls: ['./consultations-list.component.css']
 })
-export class ConsultationsListComponent {
-//value: any;
-
-  consultations: Consultation[]=[];
-  originals: Consultation[]=[];
+export class ConsultationsListComponent implements OnInit {
+  consultations: Consultation[] = [];
+  originals: Consultation[] = [];
   upcomingButtonActive: boolean;
   pastButtonActive: boolean;
-  patientLoggedId: number = 0
+  patientLoggedId: number = 0;
+  loading: boolean = true;
 
-  constructor(private consultationService: ConsultationService, private patientService: PatientService, private router: Router,private dialog: MatDialog) {
-    this.upcomingButtonActive=false;
-    this.pastButtonActive=false
+  constructor(
+      private consultationService: ConsultationService,
+      private patientService: PatientService,
+      private router: Router,
+      private dialog: MatDialog
+  ) {
+    this.upcomingButtonActive = false;
+    this.pastButtonActive = false;
+
+    // Suscribirse a eventos de navegación
+    this.router.events
+        .pipe(filter(event => event instanceof NavigationEnd))
+        .subscribe(async () => {
+          await this.loadPatientData();
+        });
   }
 
-  ngOnInit(): void {
-
-    this.patientService.getPatientLogged().subscribe((response: any)=>{
-
-      this.patientLoggedId=response.id
-      this.getAllMyConsultations(this.patientLoggedId)
-    })
-
+  async ngOnInit() {
+    await this.loadPatientData();
   }
 
-  getAllMyConsultations(patientId:number){
-    this.consultationService.getByPatientId(patientId).subscribe((response: any) =>{
+  async loadPatientData() {
+    try {
+      const response: any = await this.patientService.getPatientLogged().toPromise();
+      this.patientLoggedId = response.id;
+      await this.getAllMyConsultations(this.patientLoggedId);
+    } catch (error) {
+      console.error('Error al cargar datos del paciente:', error);
+    }
+  }
+
+  async getAllMyConsultations(patientId: number) {
+    try {
+      console.log("tetta");
+      const response: any = await this.consultationService.getByPatientId(patientId).toPromise();
+      console.log(response.content);
       this.consultations = response.content;
       this.originals = response.content;
 
       // Invertir la lista manualmente
       this.consultations = this.consultations.slice().reverse();
       this.originals = this.originals.slice().reverse();
-    })
+
+      this.loading = false; // Cambia el estado de carga
+    } catch (error) {
+      console.error('Error al obtener consultas:', error);
+      this.loading = false;
+    }
   }
 
   filterConsultations(searchName: string) {
-    this.consultations = this.originals;
-    this.consultations = this.consultations.filter(consultation => {
-      return consultation.physiotherapist.user.firstname.toLowerCase().includes(searchName.toLowerCase()) ||
-        consultation.physiotherapist.user.lastname.toLowerCase().includes(searchName.toLowerCase());
+    this.consultations = this.originals.filter(consultation => {
+      return consultation.physiotherapistId.user.firstname.toLowerCase().includes(searchName.toLowerCase()) ||
+          consultation.physiotherapistId.user.lastname.toLowerCase().includes(searchName.toLowerCase());
     });
-
   }
 
-  viewDetailsById(id: number){
+  viewDetailsById(id: number) {
     this.router.navigate([`/physiotherapist-profile/${id}`]);
   }
 
-  filterUpcomingConsultations(){
-    if(this.upcomingButtonActive) {
+  filterUpcomingConsultations() {
+    if (this.upcomingButtonActive) {
       this.upcomingButtonActive = false;
-      this.consultations = this.originals
-    }else{
-      this.upcomingButtonActive=true;
-      this.pastButtonActive=false;
-
-      this.consultations=this.originals;
-      this.consultations=this.consultations.filter(consultation => {
-        return !consultation.done;
-      })
+      this.consultations = this.originals;
+    } else {
+      this.upcomingButtonActive = true;
+      this.pastButtonActive = false;
+      this.consultations = this.originals.filter(consultation => !consultation.done);
     }
-
-
-
   }
 
-
-  filterPastConsultations(){
-
-    if(this.pastButtonActive){
-      this.pastButtonActive=false;
-      this.consultations = this.originals
-
-    }else{
-      this.pastButtonActive=true;
-      this.upcomingButtonActive=false;
-
-      this.consultations=this.originals;
-      this.consultations=this.consultations.filter(consultation => {
-        return consultation.done;
-      })
+  filterPastConsultations() {
+    if (this.pastButtonActive) {
+      this.pastButtonActive = false;
+      this.consultations = this.originals;
+    } else {
+      this.pastButtonActive = true;
+      this.upcomingButtonActive = false;
+      this.consultations = this.originals.filter(consultation => consultation.done);
     }
-
-
   }
 
   openDiagnosisDialog(consultation: any) {
@@ -107,11 +109,9 @@ export class ConsultationsListComponent {
         topic: consultation.topic,
         date: consultation.date,
         hour: consultation.hour,
-        physiotherapist_full_name: consultation.physiotherapist.user.firstname+ " "+consultation.physiotherapist.user.lastname,
+        physiotherapist_full_name: consultation.physiotherapist.user.firstname + " " + consultation.physiotherapist.user.lastname,
         diagnosis: consultation.diagnosis,
       },
     });
   }
-
-
 }
