@@ -23,6 +23,7 @@
     "@angular/router": "^16.2.0",
     "@stripe/stripe-js": "^1.54.2",
     "angular-jwt": "^0.1.11",
+    "bootstrap": "^5.2.3",
     "cors": "^2.8.5",
     "ngx-stripe": "^16.2.0",
     "ngx-toastr": "^17.0.2",
