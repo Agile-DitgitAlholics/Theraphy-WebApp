@@ -88,6 +88,8 @@ export class BookConsultationComponent implements OnInit{
       this.consultation.place = this.consultationForm.value.place;
       this.consultation.topic = this.consultationForm.value.topic;
 
+      this.consultation.physiotherapistId = this.physiotherapist.id;
+
       this.sharedConsultationService.setConsultation(this.consultation);
       this.router.navigate([`/consultation-details/physiotherapist/${this.physiotherapist.id}`]);
     }

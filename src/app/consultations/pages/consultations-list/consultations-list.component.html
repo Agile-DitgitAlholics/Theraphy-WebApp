@@ -3,19 +3,20 @@
     <app-sidenav></app-sidenav>
   </div>
   <div class="contents">
-    <div>
+    <div *ngIf="loading" class="loading-spinner">
+      <!-- Aquí puedes usar un spinner de Angular Material o cualquier otro -->
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <div *ngIf="!loading">
       <h1>My Consultations</h1>
       <p>View your consultations</p>
 
       <form class="example-form">
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Physiotherapist</mat-label>
-
           <input matInput #inputSearch placeholder="John Doe" (keyup.enter)="filterConsultations(inputSearch.value)">
           <mat-icon color="primary" matSuffix class="search-icon" (click)="filterConsultations(inputSearch.value)">search</mat-icon>
-
-          <!-- Aquí establecemos clearable en false para ocultar el botón de limpieza -->
-
         </mat-form-field>
         <div class="button-container">
           <button mat-button [ngClass]="{ 'upcoming-button': !upcomingButtonActive, 'upcoming-button-active': upcomingButtonActive }" (click)="filterUpcomingConsultations()"><h2>Upcoming</h2></button>
@@ -27,22 +28,20 @@
       <mat-divider></mat-divider>
 
       <div class="cards">
-        <!-- Utiliza *ngFor para crear una tarjeta para cada elemento de physiotherapists -->
         <mat-card class="example-card" *ngFor="let consultation of consultations">
           <div class="card-content">
-            <img mat-card-md-image [src]="consultation.physiotherapist.photoUrl" alt="{{consultation.physiotherapist.user.firstname}}">
+            <img mat-card-md-image [src]="consultation.physiotherapistId.photoUrl" alt="{{consultation.physiotherapistId.user.firstname}}">
             <div class="card-details">
-              <mat-card-title><span>{{consultation.physiotherapist.user.firstname + " " + consultation.physiotherapist.user.lastname}}</span></mat-card-title>
+              <mat-card-title><span>{{consultation.physiotherapistId.user.firstname + " " + consultation.physiotherapistId.user.lastname}}</span></mat-card-title>
               <mat-card-subtitle>
                 <span><strong>Topic:</strong> {{consultation.topic}}</span>
               </mat-card-subtitle>
               <mat-card-subtitle>
-                <span><strong>Date:</strong> {{consultation.date}} </span>
+                <span><strong>Date:</strong> {{consultation.date}}</span>
               </mat-card-subtitle>
               <mat-card-subtitle>
-                <span><strong>Hour:</strong> {{consultation.hour}} </span>
+                <span><strong>Hour:</strong> {{consultation.hour}}</span>
               </mat-card-subtitle>
-
             </div>
 
             <div class="more-details">
@@ -50,9 +49,10 @@
                 <span><strong>Place:</strong> {{consultation.place}}</span>
               </mat-card-subtitle>
               <mat-card-subtitle>
-                <span><strong>Price:</strong> S/. {{consultation.physiotherapist.fees}}</span>
+                <span><strong>Price:</strong> S/. {{consultation.physiotherapistId.fees}}</span>
               </mat-card-subtitle>
             </div>
+
             <div class="card-button" *ngIf="consultation.done">
               <div class="circle-with-text">
                 <div class="done-status-circle"></div>
@@ -61,24 +61,17 @@
               <button mat-raised-button color="primary" class="book-now-btn" (click)="openDiagnosisDialog(consultation)">
                 View Diagnosis
               </button>
-
             </div>
+
             <div class="schedule-card-button" *ngIf="!consultation.done">
               <div class="circle-with-text">
                 <div class="schedule-status-circle"></div>
                 <div class="schedule-status-text">Scheduled</div>
               </div>
             </div>
-
-
-
           </div>
         </mat-card>
-
-
       </div>
-
     </div>
-
   </div>
 </div>

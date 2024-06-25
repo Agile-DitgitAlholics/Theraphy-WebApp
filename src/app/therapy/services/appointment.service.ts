@@ -12,7 +12,7 @@ import {Diagnosis} from "../../home/model/diagnosis";
 })
 export class AppointmentService extends BaseService<Appointment> {
 
-  endPoint = '/appointments';
+  endPoint = '/therapy/appointments';
 
   constructor(http: HttpClient) {
     super(http);

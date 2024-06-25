@@ -18,7 +18,7 @@ a {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 45%;
+  width: 80vw;
   height: 100%;
 }
 .login-logo {

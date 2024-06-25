@@ -10,7 +10,7 @@ import {Certification} from "../model/certification";
 })
 export class CertificationService extends BaseService<Certification>{
 
-  endPoint = '/certifications';
+  endPoint = '/health-expertise/certifications';
 
   constructor(http: HttpClient) {
     super(http);

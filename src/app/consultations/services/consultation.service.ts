@@ -49,6 +49,7 @@ export class ConsultationService extends BaseService<Consultation>{
       'Authorization': `Bearer ${jwtToken}`
     });
 
+
     return this.http.get<Consultation>(getLastConsultationByPatientIdUrl, { headers })
       .pipe(
         retry(2),

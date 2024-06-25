@@ -10,7 +10,7 @@ import {Patient} from "../model/patient";
   providedIn: 'root'
 })
 export class PatientService extends BaseService<Patient>{
-  endPoint = '/patients';
+  endPoint = '/profile/patients';
 
   constructor(http: HttpClient) {
     super(http);
@@ -32,7 +32,7 @@ export class PatientService extends BaseService<Patient>{
 
 
   getPatientLogged(){
-    const getPatientLoggedUrl = `${this.basePath}/profile`;
+    const getPatientLoggedUrl = `${this.basePath}/PatientLogget`;
     const jwtToken = localStorage.getItem('jwtToken');
 
     if (!jwtToken) {

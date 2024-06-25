@@ -11,7 +11,7 @@ import {Review} from "../model/review";
 })
 export class ReviewService extends BaseService<Review>{
 
-  endPoint = '/reviews';
+  endPoint = '/social/reviews';
 
   constructor(http: HttpClient) {
     super(http);

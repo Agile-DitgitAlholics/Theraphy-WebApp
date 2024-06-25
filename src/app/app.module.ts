@@ -53,6 +53,7 @@ import { PatientProfileComponent } from './profile/pages/patient-profile/patient
 import { MedicalHistoryFormComponent } from './profile/pages/medical-history-form/medical-history-form.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getStorage, provideStorage } from '@angular/fire/storage';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -80,39 +81,48 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
     MedicalHistoryFormComponent,
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatIconModule,
-    BrowserAnimationsModule,
-    MatDividerModule,
-    MatCardModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    NgIf,
-    MatSelectModule,
-    HttpClientModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatListModule,
-    MatSidenavModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatLegacyTooltipModule,
-    MatSliderModule,
-    ToastrModule.forRoot(),
-    NgxStripeModule.forRoot('pk_test_51O2RELCjW3JsFKOWismIZke5hD6PoJ5u2jaOx19m1AbSYgyw9pA3GLxl0Yb83MK0G3IVCiUp0UIzM2TOwMws1u2O00WNxCfi4U'),
-    MatDialogModule,
-    MatSnackBarModule,
-    MatLineModule,
-    MatProgressBarModule,
-    provideFirebaseApp(() => initializeApp({"projectId":"theraphy-71e99","appId":"1:994229341685:web:10a64ae6e032129914e4bc","storageBucket":"theraphy-71e99.appspot.com","apiKey":"AIzaSyDcFbK3XBzFQ5CofTNWtUgO_7XSn_RPa7g","authDomain":"theraphy-71e99.firebaseapp.com","messagingSenderId":"994229341685","measurementId":"G-8CW4K0RL3P"})),
-    provideStorage(() => getStorage())
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatIconModule,
+        BrowserAnimationsModule,
+        MatDividerModule,
+        MatCardModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        NgIf,
+        MatSelectModule,
+        HttpClientModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatListModule,
+        MatSidenavModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatLegacyTooltipModule,
+        MatSliderModule,
+        ToastrModule.forRoot(),
+        NgxStripeModule.forRoot('pk_test_51O2RELCjW3JsFKOWismIZke5hD6PoJ5u2jaOx19m1AbSYgyw9pA3GLxl0Yb83MK0G3IVCiUp0UIzM2TOwMws1u2O00WNxCfi4U'),
+        MatDialogModule,
+        MatSnackBarModule,
+        MatLineModule,
+        MatProgressBarModule,
+        provideFirebaseApp(() => initializeApp({
+            "projectId": "theraphy-71e99",
+            "appId": "1:994229341685:web:10a64ae6e032129914e4bc",
+            "storageBucket": "theraphy-71e99.appspot.com",
+            "apiKey": "AIzaSyDcFbK3XBzFQ5CofTNWtUgO_7XSn_RPa7g",
+            "authDomain": "theraphy-71e99.firebaseapp.com",
+            "messagingSenderId": "994229341685",
+            "measurementId": "G-8CW4K0RL3P"
+        })),
+        provideStorage(() => getStorage()),
+        MatProgressSpinnerModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

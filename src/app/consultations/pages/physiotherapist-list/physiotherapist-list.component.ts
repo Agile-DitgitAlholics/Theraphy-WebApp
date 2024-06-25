@@ -22,7 +22,7 @@ export class PhysiotherapistListComponent implements OnInit{
   }
 
   getAllPhysiotherapists(){
-    this.physiotherapistsService.getAll().subscribe((response: any) =>{
+    this.physiotherapistsService.getAllPhysiotherapists().subscribe((response: any) =>{
       this.physiotherapists = response.content;
       this.originals = response.content;
     })
