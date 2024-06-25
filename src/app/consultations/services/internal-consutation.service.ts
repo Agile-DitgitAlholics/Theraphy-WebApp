@@ -4,7 +4,7 @@ import {CreateConsultation} from "../model/createConsultation";
 @Injectable({
   providedIn: 'root'
 })
-export class SharedConsultationService {
+export class InternalConsultationService {
 
   consultation!: CreateConsultation;
 

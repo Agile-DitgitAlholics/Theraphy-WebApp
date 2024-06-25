@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Physiotherapist} from "../../../security/model/physiotherapist";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PhysiotherapistService} from "../../../security/services/physiotherapist.service";
-import {SharedConsultationService} from "../../services/shared-consutation.service";
+import {InternalConsultationService} from "../../services/internal-consutation.service";
 import {ReviewService} from "../../../social/services/review.service";
 import {CreateConsultation} from "../../model/createConsultation";
 
@@ -38,7 +38,7 @@ export class BookConsultationComponent implements OnInit{
     1
   );
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private physiotherapistService: PhysiotherapistService, private sharedConsultationService: SharedConsultationService, private reviewService: ReviewService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private physiotherapistService: PhysiotherapistService, private sharedConsultationService: InternalConsultationService, private reviewService: ReviewService) {
     this.consultationForm = this.fb.group({
       date: ['', Validators.required],
       hour: ['', Validators.required],

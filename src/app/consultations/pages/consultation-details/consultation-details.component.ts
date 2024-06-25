@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Physiotherapist} from "../../../security/model/physiotherapist";
 import {PhysiotherapistService} from "../../../security/services/physiotherapist.service";
 import {ConsultationService} from "../../services/consultation.service";
-import {SharedConsultationService} from "../../services/shared-consutation.service";
+import {InternalConsultationService} from "../../services/internal-consutation.service";
 import {ReviewService} from "../../../social/services/review.service";
 import {CreateConsultation} from "../../model/createConsultation";
 
@@ -17,7 +17,7 @@ export class ConsultationDetailsComponent implements OnInit{
   physiotherapistId! : number;
   consultation!: CreateConsultation;
   reviewQuantity: number = 0 ;
-  constructor(private route: ActivatedRoute, private physiotherapistService: PhysiotherapistService, private consultationService: ConsultationService, private sharedConsultationService: SharedConsultationService, private reviewService: ReviewService) {
+  constructor(private route: ActivatedRoute, private physiotherapistService: PhysiotherapistService, private consultationService: ConsultationService, private sharedConsultationService: InternalConsultationService, private reviewService: ReviewService) {
     this.route.params.subscribe(params => {
       this.physiotherapistId = +params['id'];
     });

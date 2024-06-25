@@ -9,7 +9,9 @@ import {Payment} from "../model/payment";
 })
 export class PaymentService{
 
+
   stripeUrl='http://127.0.0.1:58447/api/v1/payments'
+
 
 
   // Common options
