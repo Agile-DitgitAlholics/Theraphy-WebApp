@@ -8,7 +8,7 @@ import {catchError, Observable, retry, throwError} from "rxjs";
 export class BaseService<T> {
   // Resource Endpoint
 
-  protected basepath='http://localhost:8080/api/v1'
+  protected basePath='http://localhost:8080/api/v1'
 
 
   // Common options
@@ -105,7 +105,6 @@ export class BaseService<T> {
         catchError(this.handleError));
   }
 
-  protected basePath='https://api-iotheraphy-production-97a8.up.railway.app/api/v1'
 
   getItemByExternalId(field: any, value: any, external: any): Observable<T>{
     return this.http.get<T>(
