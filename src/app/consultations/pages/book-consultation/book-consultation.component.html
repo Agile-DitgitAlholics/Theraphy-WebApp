@@ -6,21 +6,24 @@
 
     <div class="profile-header">
       <div class="profile-header_left">
-          <svg (click)="goBack()" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 40 40" fill="none">
-            <path d="M33.3333 18.3331V21.6665H13.3333L22.5 30.8331L20.1333 33.1998L6.93332 19.9998L20.1333 6.7998L22.5 9.16647L13.3333 18.3331H33.3333Z" fill="#014DBF" style="cursor: pointer" />
-          </svg>
+        <svg (click)="goBack()" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 40 40"
+             fill="none">
+          <path
+            d="M33.3333 18.3331V21.6665H13.3333L22.5 30.8331L20.1333 33.1998L6.93332 19.9998L20.1333 6.7998L22.5 9.16647L13.3333 18.3331H33.3333Z"
+            fill="#014DBF" style="cursor: pointer"/>
+        </svg>
         <h1>Book Consultation</h1>
       </div>
     </div>
 
     <div class="flex-container">
-      <img src="{{this.physiotherapist.photoUrl}}" alt="Italian Trulli">
+      <img src="{{this.physiotherapist?.photoUrl}}" alt="Italian Trulli">
       <div class="custom-box">
-        <p>S/. {{physiotherapist.fees}} <span class="consult-text">/consult.</span></p>
+        <p>S/. {{ this.physiotherapist?.fees }} <span class="consult-text">/consult.</span></p>
       </div>
       <div class="description">
-        <h3>Dr. {{this.physiotherapist.user.firstname}} {{this.physiotherapist.user.lastname}}</h3>
-        <h4 class="text"><strong>Specialization:</strong> {{physiotherapist.specialization}}</h4>
+        <h3>Dr. {{ this.physiotherapist.user.firstname }} {{ this.physiotherapist.user.lastname }}</h3>
+        <h4 class="text"><strong>Specialization:</strong> {{ physiotherapist.specialization }}</h4>
       </div>
     </div>
 
@@ -28,102 +31,219 @@
       <div class="item">
         <div class="icon"><img src="../../../../assets/img/patient-icon.ico" alt=""></div>
         <div class="description">
-          <h4 class="text">{{this.physiotherapist.patientQuantity}}</h4>
+          <h4 class="text">{{ this.physiotherapist.patientQuantity }}</h4>
           <h4 class="text">Patients</h4>
         </div>
       </div>
       <div class="item">
         <div class="icon"><img src="../../../../assets/img/experience-icon.ico" alt=""></div>
         <div class="description">
-          <h4 class="text">{{this.physiotherapist.yearsExperience}}</h4>
+          <h4 class="text">{{ this.physiotherapist.yearsExperience }}</h4>
           <h4 class="text">Years of experience</h4>
         </div>
       </div>
       <div class="item">
         <div class="icon"><img src="../../../../assets/img/rating-icon.ico" alt=""></div>
         <div class="description">
-          <h4 class="text">{{ratingRounded}}</h4>
+          <h4 class="text">{{ ratingRounded }}</h4>
           <h4 class="text">Rating</h4>
         </div>
       </div>
       <div class="item">
         <div class="icon"><img src="../../../../assets/img/review-icon.ico" alt=""></div>
         <div class="description">
-          <h4 class="text">{{this.reviewQuantity}}</h4>
+          <h4 class="text">{{ this.reviewQuantity }}</h4>
           <h4 class="text">Reviews</h4>
         </div>
       </div>
     </div>
 
     <form [formGroup]="consultationForm" (ngSubmit)="onSubmit()">
-          <div class="form">
-            <div class="form__twosection">
-              <div class="form__section1">
-                <p>Day</p>
-                <mat-form-field appearance="outline" class="custom-form-field">
-                  <mat-label>Choose a date</mat-label>
-                  <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event.target.value)" class="custom-outline" formControlName="date" [(ngModel)]="consultation.date" required >
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker ></mat-datepicker>
-                </mat-form-field>
-                <div *ngIf="isSundaySelected" class="error-message">
-                  Can't select Sunday.
-                </div>
-                <div *ngIf="isBeforeDate" class="error-message">
-                  Can't select a date before today.
-                </div>
+      <div class="form mt-5">
+        <!--        <div class="form__twosection">-->
+        <div class="container-fluid p-0">
+          <!--          <div class="form__section1">-->
+          <div class="row">
+            <h5>Day</h5>
+            <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0 d-flex justify-content-center">
 
+              <mat-form-field appearance="outline" class="custom-form-field w-50">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event.target.value)"
+                       class="custom-outline" formControlName="date" [(ngModel)]="consultation.date" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <div *ngIf="isSundaySelected" class="error-message">
+                Can't select Sunday.
+              </div>
+              <div *ngIf="isBeforeDate" class="error-message">
+                Can't select a date before today.
               </div>
 
-              <div class="form__section2">
-                <p>Time</p>
-                <div class="form__section2__two">
-                  <mat-form-field appearance="outline"  >
-                    <mat-label>Selecciona la hora</mat-label>
-                    <mat-select [(ngModel)]="selectedHour" formControlName="hour"  (click)="onHourChange()">
-                      <mat-option *ngFor="let hour of hours" [value]="hour" required>{{ hour }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
+            </div>
+
+            <!--          <div class="form__section2">-->
+            <div
+              class="col-12 col-xl-12 col-lg-6 col-md-12 col-sm-12 p-0 d-flex align-items-center justify-content-center">
+              <!--                <p>Time</p>-->
+              <!--                <div class="form__section2__two">-->
+              <!--                  <mat-form-field appearance="outline"  >-->
+              <!--                    <mat-label>Selecciona la hora</mat-label>-->
+              <!--                    <mat-select [(ngModel)]="selectedHour" formControlName="hour"  (click)="onHourChange()">-->
+              <!--                      <mat-option *ngFor="let hour of hours" [value]="hour" required>{{ hour }}</mat-option>-->
+              <!--                    </mat-select>-->
+              <!--                  </mat-form-field>-->
 
 
-                  <mat-form-field appearance="outline" >
-                    <mat-label>Selecciona los minutos</mat-label>
-                     <mat-select [(ngModel)]="selectedMinute" formControlName="minute"  (click)="onHourMinute()">
-                       <mat-option *ngFor="let minute of minutes" [value]="minute" required>{{ minute }}</mat-option>
-                     </mat-select>
-                  </mat-form-field>
-                </div>
+              <!--                  <mat-form-field appearance="outline" >-->
+              <!--                    <mat-label>Selecciona los minutos</mat-label>-->
+              <!--                     <mat-select [(ngModel)]="selectedMinute" formControlName="minute"  (click)="onHourMinute()">-->
+              <!--                       <mat-option *ngFor="let minute of minutes" [value]="minute" required>{{ minute }}</mat-option>-->
+              <!--                     </mat-select>-->
+              <!--                  </mat-form-field>-->
+              <!--                </div>-->
+              <div class="d-flex justify-content-center">
+                <button class="btn btn-light rounded-pill mx-2">
+                  <div class="text-muted">SUN</div>
+                  <div class="fw-bold">25</div>
+                </button>
+                <button class="btn btn-light rounded-pill mx-2">
+                  <div class="text-muted">MON</div>
+                  <div class="fw-bold">26</div>
+                </button>
+                <button class="btn btn-outline-danger rounded-pill mx-2">
+                  <div class="text-danger">TUE</div>
+                  <div class="fw-bold text-danger">27</div>
+                </button>
+                <button class="btn btn-light rounded-pill mx-2">
+                  <div class="text-muted">WED</div>
+                  <div class="fw-bold">28</div>
+                </button>
+                <button class="btn btn-light rounded-pill mx-2">
+                  <div class="text-muted">THU</div>
+                  <div class="fw-bold">29</div>
+                </button>
               </div>
-            </div>
-
-
-            <div class="form__section3">
-              <p>Location</p>
-              <mat-form-field appearance="outline">
-
-                <input matInput placeholder="Location" formControlName="place" [(ngModel)]="consultation.place" class="custom-outline" required>
-
-
-              </mat-form-field>
-
-            </div>
-
-            <div class="form__section4">
-              <p>Topic</p>
-              <mat-form-field appearance="outline">
-
-                <input matInput placeholder="Topic" formControlName="topic" [(ngModel)]="consultation.topic" class="custom-outline" required>
-
-
-              </mat-form-field>
-
-            </div>
-
-            <div class="form__button">
-              <button class="button" type="submit" mat-button  style="  background-color: #014DBF !important; color: white;" [disabled]="isSundaySelected || isBeforeDate">Go to pay</button>
             </div>
           </div>
-        </form>
+        </div>
+
+
+        <div class="container-fluid p-0">
+          <h5>Time</h5>
+
+          <div class="container d-flex justify-content-center">
+            <!-- Time period selection -->
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-morning-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-morning" type="button" role="tab" aria-controls="pills-morning"
+                        aria-selected="true" style="background-color: #c2185b;">Morning
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-afternoon-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-afternoon"
+                        type="button" role="tab" aria-controls="pills-afternoon" aria-selected="false">Afternoon
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-evening-tab" data-bs-toggle="pill" data-bs-target="#pills-evening"
+                        type="button" role="tab" aria-controls="pills-evening" aria-selected="false">Evening
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-night-tab" data-bs-toggle="pill" data-bs-target="#pills-night"
+                        type="button" role="tab" aria-controls="pills-night" aria-selected="false">Night
+                </button>
+              </li>
+            </ul>
+
+            <!-- Time selection for Morning -->
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-morning" role="tabpanel"
+                   aria-labelledby="pills-morning-tab">
+                <div class="d-flex flex-wrap time-group">
+                  <button class="btn btn-light"
+                          style="border-radius: 25px; border: 1px solid #ddd;  width: 90px;  height: 40px;margin: 5px;">
+                    8:00 AM
+                  </button>
+                  <button class="btn btn-light"
+                          style="border-radius: 25px; border: 1px solid #ddd;  width: 90px;  height: 40px;margin: 5px;  border: 2px solid #c2185b; color: #c2185b;">
+                    8:30 AM
+                  </button>
+                  <button class="btn btn-light"
+                          style="border-radius: 25px; border: 1px solid #ddd;  width: 90px;  height: 40px;margin: 5px;">
+                    8:45 AM
+                  </button>
+                  <button class="btn btn-light "
+                          style="border-radius: 25px; border: 1px solid #ddd;  width: 90px;  height: 40px;margin: 5px;">
+                    9:00 AM
+                  </button>
+                  <button class="btn btn-light"
+                          style="border-radius: 25px; border: 1px solid #ddd;  width: 90px;  height: 40px;margin: 5px;">
+                    9:30 AM
+                  </button>
+                  <button class="btn btn-light"
+                          style="border-radius: 25px; border: 1px solid #ddd;  width: 100px;  height: 40px;margin: 5px;">
+                    10:00 AM
+                  </button>
+                </div>
+              </div>
+
+              <!-- Empty sections for Afternoon, Evening, Night -->
+              <div class="tab-pane fade" id="pills-afternoon" role="tabpanel" aria-labelledby="pills-afternoon-tab">
+                <div class="d-flex flex-wrap time-group">
+                  <!-- Add your Afternoon times here -->
+                </div>
+              </div>
+              <div class="tab-pane fade" id="pills-evening" role="tabpanel" aria-labelledby="pills-evening-tab">
+                <div class="d-flex flex-wrap time-group">
+                  <!-- Add your Evening times here -->
+                </div>
+              </div>
+              <div class="tab-pane fade" id="pills-night" role="tabpanel" aria-labelledby="pills-night-tab">
+                <div class="d-flex flex-wrap time-group">
+                  <!-- Add your Night times here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form__section3">
+          <h5>Location</h5>
+          <mat-form-field appearance="outline">
+
+            <input matInput placeholder="Location" formControlName="place" [(ngModel)]="consultation.place"
+                   class="custom-outline" required>
+
+
+          </mat-form-field>
+
+        </div>
+
+        <div class="form__section4">
+          <h5>Topic</h5>
+          <mat-form-field appearance="outline">
+
+            <input matInput placeholder="Topic" formControlName="topic" [(ngModel)]="consultation.topic"
+                   class="custom-outline" required>
+
+
+          </mat-form-field>
+
+        </div>
+
+        <div class="form__button">
+          <button class="button" type="submit" mat-button style="  background-color: #014DBF !important; color: white;"
+                  [disabled]="isSundaySelected || isBeforeDate">Go to pay
+          </button>
+        </div>
+      </div>
+    </form>
 
   </div>
 

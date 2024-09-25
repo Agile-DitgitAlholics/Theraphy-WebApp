@@ -41,9 +41,9 @@ export class BookConsultationComponent implements OnInit{
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private physiotherapistService: PhysiotherapistService, private sharedConsultationService: InternalConsultationService, private reviewService: ReviewService) {
     this.consultationForm = this.fb.group({
       date: ['', Validators.required],
-      hour: ['', Validators.required],
+     // hour: ['', Validators.required],
       place: ['', Validators.required],
-      minute: ['', Validators.required],
+      //minute: ['', Validators.required],
       topic: ['', Validators.required],
     });
     this.route.params.subscribe(params => {
@@ -73,18 +73,18 @@ export class BookConsultationComponent implements OnInit{
   onSubmit(){
     if(this.consultationForm.valid){
       this.consultation.date = this.schedule;
-      if(this.selectedHour<10){
-        this.consultation.hour = "0" + this.selectedHour.toString() + ":" ;
-        if(this.selectedMinute<10){
-          this.consultation.hour += "0" + this.selectedMinute.toString();
-        }else {
-          this.consultation.hour += this.selectedMinute.toString();
-        }
-      }else if(this.selectedMinute<10) {
-        this.consultation.hour = this.selectedHour.toString() + ":" + "0" + this.selectedMinute.toString();
-      }else{
-        this.consultation.hour = this.selectedHour.toString() + ":" + this.selectedMinute.toString();
-      }
+      // if(this.selectedHour<10){
+      //   this.consultation.hour = "0" + this.selectedHour.toString() + ":" ;
+      //   if(this.selectedMinute<10){
+      //     this.consultation.hour += "0" + this.selectedMinute.toString();
+      //   }else {
+      //     this.consultation.hour += this.selectedMinute.toString();
+      //   }
+      // }else if(this.selectedMinute<10) {
+      //   this.consultation.hour = this.selectedHour.toString() + ":" + "0" + this.selectedMinute.toString();
+      // }else{
+      //   this.consultation.hour = this.selectedHour.toString() + ":" + this.selectedMinute.toString();
+      // }
       this.consultation.place = this.consultationForm.value.place;
       this.consultation.topic = this.consultationForm.value.topic;
 
@@ -129,7 +129,6 @@ export class BookConsultationComponent implements OnInit{
     if(this.selectedHour < currentDate.getHours()){
       this.isBeforeHour = true;
     }
-
   }
 
   onHourMinute(){
